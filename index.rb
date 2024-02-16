@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './head_hunter_parser'
+require './lib/head_hunter_parser'
 require 'terminal-table'
 
 if __FILE__ == $PROGRAM_NAME

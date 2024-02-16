@@ -7,6 +7,8 @@ class VacancyChecker
   end
 
   def call
+    return false if vacancy.nil?
+
     vacancies.find { |v| v[1] == vacancy[1] }.nil? ? true : false
   end
 

@@ -11,7 +11,7 @@ if __FILE__ == $PROGRAM_NAME
           end
 
   vacancies = HeadHunterParser.new(title).parse_hh_vacancies
-  table = Terminal::Table.new headings: ['Title', 'Employer', 'Compensation', "link", "Page"], rows: vacancies
+  table = Terminal::Table.new headings: ['Title', 'Employer', 'Compensation', "link",], rows: vacancies
   puts table
   puts vacancies.size
 end

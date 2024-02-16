@@ -6,6 +6,7 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 require_relative 'vacancy_checker'
+require_relative 'vacancy_processor'
 
 class HeadHunterParser
   MAX_PAGE_COUNT = 40
@@ -43,35 +44,13 @@ class HeadHunterParser
   end
 
   def process_vacancy_block(block)
-    title_elem = block.css('.serp-item__title').first
-    vacancy_title = title_elem ? title_elem.text.strip : 'No title found'
+    vacancy = VacancyProcessor.new(block,title).call
 
-    return  unless vacancy_title.downcase.include?(title.downcase)
-
-    link_elem = block.css('.bloko-link').first
-    link = link_elem ? shorten_url(link_elem['href']) : 'No link found'
-
-    compensation_elem = block.css('.bloko-header-section-2').first
-    compensation = compensation_elem ? compensation_elem.text.strip.gsub(/\s+/, ' ') : '???'
-
-    employer_elem = block.css('.vacancy-serp-item__meta-info-company').first
-    employer_name = employer_elem ? employer_elem.css('a').first&.text&.strip : 'No employer found'
-
-    vacancy = [vacancy_title, employer_name, compensation, link, @page]
-
-    return unless VacancyChecker.new(vacancies, vacancy).call
-
-    vacancies << vacancy
+    vacancies << vacancy if VacancyChecker.new(vacancies, vacancy).call
   end
 
   def encode_title
     URI.encode_www_form_component(title)
-  end
-
-  def shorten_url(original_url)
-    uri = URI.parse("http://tinyurl.com/api-create.php?url=#{original_url}")
-    response = Net::HTTP.get_response(uri)
-    response.body.strip
   end
 
   attr_reader :title

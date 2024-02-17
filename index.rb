@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require './lib/head_hunter_parser'
+require './lib/printer'
 require 'terminal-table'
 
 if __FILE__ == $PROGRAM_NAME
@@ -11,7 +12,5 @@ if __FILE__ == $PROGRAM_NAME
           end
 
   vacancies = HeadHunterParser.new(title).parse_hh_vacancies
-  table = Terminal::Table.new headings: ['Title', 'Employer', 'Compensation', "link",], rows: vacancies
-  puts table
-  puts vacancies.size
+  Printer.new(vacancies).print
 end

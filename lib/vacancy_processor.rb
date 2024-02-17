@@ -10,7 +10,7 @@ class VacancyProcessor
   def call
     return nil unless relevant_vacancy?
 
-    [vacancy_title, employer_name, compensation, link]
+    [link, employer_name, compensation, vacancy_title]
   end
 
   private
@@ -26,7 +26,6 @@ class VacancyProcessor
     title_elem ? title_elem.text.strip : 'No title found'
   end
 
-
   def link
     link_elem = block.css('.bloko-link').first
     link_elem ? shorten_url(link_elem['href']) : 'No link found'
@@ -41,7 +40,6 @@ class VacancyProcessor
     employer_elem = block.css('.vacancy-serp-item__meta-info-company').first
     employer_elem ? employer_elem.css('a').first&.text&.strip : 'No employer found'
   end
-
 
   def shorten_url(original_url)
     uri = URI.parse("http://tinyurl.com/api-create.php?url=#{original_url}")

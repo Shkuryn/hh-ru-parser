@@ -15,5 +15,4 @@ class VacancyChecker
   private
 
   attr_reader :vacancies, :vacancy
-
 end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class VacancyProcessor
-
   def initialize(block, title)
     @block = block
     @title = title
@@ -46,5 +45,4 @@ class VacancyProcessor
     response = Net::HTTP.get_response(uri)
     response.body.strip
   end
-
 end

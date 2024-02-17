@@ -18,7 +18,6 @@ class HeadHunterParser
 
   def parse_hh_vacancies
     MAX_PAGE_COUNT.times do
-      url = "https://hh.ru/search/vacancy?text=#{encode_title}&page=#{@page}"
       headers = {
         'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
       }
@@ -29,6 +28,8 @@ class HeadHunterParser
       vacancy_blocks = doc.css('.vacancy-serp-item__layout')
 
       process_page(vacancy_blocks)
+      puts "page #{@page}"
+      puts "count #{vacancies.size}"
       @page += 1
     end
 
@@ -51,6 +52,11 @@ class HeadHunterParser
 
   def encode_title
     URI.encode_www_form_component(title)
+  end
+
+  def url
+    page_param = @page.positive? ? "&page=#{@page}" : ''
+    "https://hh.ru/search/vacancy?text=#{encode_title}#{page_param}"
   end
 
   attr_reader :title

@@ -16,4 +16,4 @@ ruby parsing  vacancies script for job portal hh.ru
 
 ## Answer example:
 
-![Example result](images/example.png)
+![Example result](images/result.png)

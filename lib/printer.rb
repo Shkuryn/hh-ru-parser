@@ -17,6 +17,8 @@ class Printer
 
   def strip_columns(vacancies)
     vacancies.each do |vacancy|
+      next if vacancy[1].nil? || vacancy[3].nil?
+
       vacancy[1] = vacancy[1][0, 50]
       vacancy[3] = vacancy[3][0, 50]
     end
